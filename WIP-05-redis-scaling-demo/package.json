@@ -1,0 +1,19 @@
+{
+  "name": "redis-scaling-demo",
+  "version": "1.0.0",
+  "description": "Bull Redis Scaling Demo",
+  "main": "worker.js",
+  "scripts": {
+    "start-worker-type1": "node worker-type1.js",
+    "start-worker-type2": "node worker-type2.js",
+    "producer": "node producer.js"
+  },
+  "dependencies": {
+    "bull": "^3.22.6",
+    "ioredis": "^4.28.2",
+    "redis": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/bull": "^4.10.0"
+  }
+}

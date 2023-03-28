@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+  producer:
+    build: .
+    command: node producer.js
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379
+
+  worker-1:
+    build: .
+    command: node worker.js
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379
+
+  worker-2:
+    build: .
+    command: node worker.js
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379

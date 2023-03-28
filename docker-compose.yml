@@ -1,0 +1,6 @@
+version: "3.9"
+
+services:
+  kodi:
+    image: "erichough/kodi"
+    network_mode: "host"

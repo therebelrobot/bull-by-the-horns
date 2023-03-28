@@ -1,0 +1,5 @@
+apps:
+  - script: worker.js
+    name: "worker"
+    instances: 2
+    exec_mode: cluster

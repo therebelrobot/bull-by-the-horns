@@ -1,0 +1,100 @@
+version: "3.9"
+
+services:
+  producer:
+    build: .
+    command: npm run producer
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+    restart: on-failure
+
+  worker-type1:
+    build: .
+    command: npm run start-worker-type1
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - producer
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+    restart: on-failure
+
+  worker-type2:
+    build: .
+    command: npm run start-worker-type2
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - producer
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+    restart: on-failure
+
+  redis-node-1:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7000",
+      ]
+    ports:
+      - "7000:7000"
+
+  redis-node-2:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7001",
+      ]
+    ports:
+      - "7001:7001"
+
+  redis-node-3:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7002",
+      ]
+    ports:
+      - "7002:7002"

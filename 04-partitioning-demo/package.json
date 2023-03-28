@@ -1,0 +1,15 @@
+{
+  "name": "partitioning-demo",
+  "version": "1.0.0",
+  "description": "Bull Partitioning Demo",
+  "main": "worker.js",
+  "scripts": {
+    "start-worker-type1": "node worker-type1.js",
+    "start-worker-type2": "node worker-type2.js",
+    "producer": "node producer.js"
+  },
+  "dependencies": {
+    "bull": "^3.22.6",
+    "redis": "^4.0.1"
+  }
+}

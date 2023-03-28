@@ -1,0 +1,15 @@
+{
+  "name": "pm2-demo",
+  "version": "1.0.0",
+  "description": "Bull PM2 Demo",
+  "main": "worker.js",
+  "scripts": {
+    "start": "pm2-runtime start process.yml",
+    "producer": "node producer.js"
+  },
+  "dependencies": {
+    "bull": "^3.22.6",
+    "redis": "^4.0.1",
+    "pm2": "^5.1.2"
+  }
+}

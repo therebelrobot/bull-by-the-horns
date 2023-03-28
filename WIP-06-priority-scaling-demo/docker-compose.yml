@@ -1,0 +1,95 @@
+version: "3.9"
+
+services:
+  producer:
+    build: .
+    command: node producer.js
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+
+  worker-type1:
+    build: .
+    command: node worker-type1.js
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+
+  worker-type2:
+    build: .
+    command: node worker-type2.js
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+    environment:
+      REDIS_CLUSTER_URL: "redis://redis-node-1:7000,redis://redis-node-2:7001,redis://redis-node-3:7002"
+
+  redis-node-1:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7000",
+      ]
+    ports:
+      - "7000:7000"
+
+  redis-node-2:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7001",
+      ]
+    ports:
+      - "7001:7001"
+
+  redis-node-3:
+    image: "redis:latest"
+    command:
+      [
+        "redis-server",
+        "--cluster-enabled",
+        "yes",
+        "--cluster-config-file",
+        "nodes.conf",
+        "--cluster-node-timeout",
+        "5000",
+        "--appendonly",
+        "yes",
+        "--protected-mode",
+        "no",
+        "--port",
+        "7002",
+      ]
+    ports:
+      - "7002:7002"

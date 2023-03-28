@@ -1,0 +1,14 @@
+{
+  "name": "priority-demo",
+  "version": "1.0.0",
+  "description": "Bull Priority Demo",
+  "main": "worker.js",
+  "scripts": {
+    "start": "node worker.js",
+    "producer": "node producer.js"
+  },
+  "dependencies": {
+    "bull": "^3.22.6",
+    "redis": "^4.0.1"
+  }
+}
